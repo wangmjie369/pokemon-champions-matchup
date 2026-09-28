@@ -19,7 +19,7 @@
 
 ```js
 window.CHAMPIONS_UPDATE_CONFIG = {
-  baseUrl: "https://raw.githubusercontent.com/你的用户名/你的仓库名/main/update",
+  baseUrl: "https://raw.githubusercontent.com/wangmjie369/pokemon-champions-matchup/main/update",
   checkIntervalHours: 4
 };
 ```
