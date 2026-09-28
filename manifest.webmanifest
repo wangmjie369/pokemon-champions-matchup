@@ -1,0 +1,15 @@
+﻿{
+  "name": "宝可梦对阵分析",
+  "short_name": "对阵分析",
+  "description": "宝可梦冠军版属性克制、防守盲点、打击盲点和配招分析",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#101722",
+  "theme_color": "#182636",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

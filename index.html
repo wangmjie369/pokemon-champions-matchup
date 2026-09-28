@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="宝可梦对阵分析">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>宝可梦对阵分析</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>宝可梦对阵分析</h1>
+        <p>冠军版 M-C · 单打 / 双打 · 使用率配招 · 盲点分析</p>
+      </div>
+      <button id="analyzeBtn" class="primary-btn">分析队伍</button>
+    </header>
+
+    <main>
+      <section class="mode-panel">
+        <div class="mode-intro"><strong>对战模式</strong><small>默认使用率配招 · 可手动修改</small></div>
+        <div class="format-switch" role="radiogroup" aria-label="对战格式">
+          <label><input type="radio" name="battleFormat" value="single" checked><span>单打</span></label>
+          <label><input type="radio" name="battleFormat" value="double"><span>双打</span></label>
+        </div>
+      </section>
+
+      <details id="managementPanel" class="management-panel">
+        <summary><span>队伍与存档管理</span><small>保存 · 改名 · 新建 · 队伍载入</small></summary>
+        <div class="management-body">
+          <section class="save-panel">
+            <div class="save-intro">
+              <h2>队伍存档</h2>
+              <p>保存在当前设备，下次打开可直接读取。</p>
+            </div>
+            <div class="save-form">
+              <label>存档内容<select id="saveScope"><option value="our">我方队伍</option><option value="opp">对手队伍</option><option value="both">双方队伍</option></select></label>
+              <label>队伍名称<input id="saveName" type="text" maxlength="30" placeholder="例如：晴天队；改名时先选已有队伍"></label>
+              <button id="saveTeamBtn" class="secondary-btn" type="button">保存队伍</button>
+            </div>
+            <div class="save-load">
+              <label>已有队伍<select id="savedTeamList"><option value="">暂无存档</option></select></label>
+              <button id="loadTeamBtn" class="secondary-btn" type="button" disabled>读取</button>
+              <button id="renameTeamBtn" class="ghost-btn" type="button" disabled>保存改名</button>
+              <button id="deleteTeamBtn" class="ghost-btn" type="button" disabled>删除</button>
+            </div>
+            <div class="new-team-row">
+              <label>新建范围<select id="newTeamScope"><option value="our">我方队伍</option><option value="opp">对手队伍</option><option value="both">双方队伍</option></select></label>
+              <button id="newTeamBtn" class="ghost-btn" type="button">创建新队伍</button>
+            </div>
+            <div class="quick-actions">
+              <button id="exportTeamsBtn" class="ghost-btn" type="button">导出存档</button>
+              <button id="importTeamsBtn" class="ghost-btn" type="button">导入存档</button>
+              <button id="checkUpdateBtn" class="ghost-btn" type="button">检查更新</button>
+              <input id="importTeamsFile" type="file" accept=".json,application/json" hidden>
+            </div>
+            <div id="updateStatus" class="update-status">正在准备数据更新...</div>
+            <div id="saveStatus" class="save-status">存档只保存在当前设备；选择已有队伍后可修改名称。</div>
+          </section>
+
+          <section id="innerPairPanel" class="inner-pair-panel">
+            <div class="inner-pair-intro">
+              <h2>队伍载入</h2>
+              <p>任意队伍存档都可以载入到我方或对手位置，不限制原存档范围。</p>
+            </div>
+            <label>我方存档<select id="innerOurTeam"><option value="">暂无存档</option></select></label>
+            <label>对手存档<select id="innerOppTeam"><option value="">暂无存档</option></select></label>
+            <button id="loadInnerTeamsBtn" class="secondary-btn" type="button" disabled>载入所选队伍</button>
+            <div id="innerPairStatus" class="save-status"></div>
+          </section>
+        </div>
+      </details>
+
+      <section class="team-grid">
+        <article class="team-panel our-team">
+          <div class="team-title"><h2>我方队伍</h2><div class="team-tools"><button id="randomOurBtn" class="mini-btn" type="button">随机3只上场</button><small id="ourCount">0 / 3 上场</small></div></div>
+          <div id="ourTeam" class="team-list"></div>
+        </article>
+        <article class="team-panel opponent-team">
+          <div class="team-title"><h2>对手队伍</h2><div class="team-tools"><button id="randomOppBtn" class="mini-btn" type="button">随机3只上场</button><small id="oppCount">0 / 3 上场</small></div></div>
+          <div id="oppTeam" class="team-list"></div>
+        </article>
+      </section>
+
+      <section id="resultArea" class="results">
+        <div class="empty-state">
+          <h2>等待分析</h2>
+          <p>配置队伍后点击“分析队伍”；每边最多选择 3 只上场。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      数据与规则按《宝可梦冠军》Regulation M-C（2026-09-09 至 2026-12-02）整理；不含主线《朱／紫》的太晶或星晶机制。配招自动填充使用率数据来自 Pikalytics。分析结果用于战术参考，不替代游戏内实测。
+    </footer>
+  </div>
+
+  <script src="data/champions-data.js"></script>
+  <script src="data/champions-zh.js"></script>
+  <script src="data/usage-mc.js"></script>
+  <script src="data/version.js"></script>
+  <script src="update-config.js"></script>
+  <script src="update-loader.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

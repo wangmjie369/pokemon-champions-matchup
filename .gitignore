@@ -1,0 +1,6 @@
+.gradle/
+**/build/
+Android项目/.idea/
+*.iml
+Android项目/local.properties
+__pycache__/
