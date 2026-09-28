@@ -11,24 +11,23 @@
 - 每 4 小时运行一次
 - 也可以手动触发
 
-## 启用 GitHub Pages 或在线文件
+## 使用 GitHub Raw 更新源
 
 1. 把整个项目上传到 GitHub 仓库。
-2. 让仓库根目录下的 `update/` 可以被 HTTPS 访问。
+2. 更新源使用 GitHub Raw 即可，不需要开启 Pages。
 3. 修改根目录的 `update-config.js`：
 
 ```js
 window.CHAMPIONS_UPDATE_CONFIG = {
-  baseUrl: "https://你的用户名.github.io/你的仓库名/update",
+  baseUrl: "https://raw.githubusercontent.com/你的用户名/你的仓库名/main/update",
   checkIntervalHours: 4
 };
 ```
 
-如果使用 GitHub Raw，也可以填写对应的 `raw.githubusercontent.com` 地址。
+
 
 ## Android APK
 
-网页版放在服务器上时，更新地址可以直接使用相对路径。  
 APK 使用 `file:///android_asset/index.html`，所以要联网更新 APK 内的数据，必须把 `baseUrl` 改成上面的 HTTPS 绝对地址，然后重新打包一次 APK。
 
 之后冠军版数据更新时：
