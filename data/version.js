@@ -1,1 +1,1 @@
-window.CHAMPIONS_LOCAL_VERSION = "data-fbe7f7cfda25dfde";
+window.CHAMPIONS_LOCAL_VERSION = "data-248ea62e1593e86a";
